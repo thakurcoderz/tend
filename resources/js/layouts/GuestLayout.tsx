@@ -48,8 +48,6 @@ export default function GuestLayout({ children, title }: Props) {
 
     const user = auth?.user;
 
-    // Inertia keeps the layout mounted across visits, so the drawer has to be
-
     const isActive = (href: string) => url === href || url.startsWith(`${href}/`) || url.startsWith(`${href}?`);
 
     return (
@@ -64,7 +62,7 @@ export default function GuestLayout({ children, title }: Props) {
                 Skip to content
             </a>
 
-            <header className="sticky top-0 z-40 border-b border-line bg-surface/85 backdrop-blur-md">
+            <header className="sticky top-0 z-40 border-b border-line bg-surface/90 backdrop-blur-xl supports-[backdrop-filter]:bg-surface/80">
                 <div className="mx-auto flex h-[68px] max-w-7xl items-center gap-6 px-4 sm:px-6 lg:px-8">
                     <Brand />
 
@@ -158,15 +156,20 @@ export default function GuestLayout({ children, title }: Props) {
                     <div className="grid gap-10 pb-10 md:grid-cols-4">
                         <div className="md:col-span-2">
                             <Brand />
-                            <p className="mt-4 max-w-sm text-sm text-ink-muted">
-                                Clinical education, competency assessment, and verifiable credentials for personal
-                                care aides, nursing assistants, and home caregivers.
+                            <p className="mt-4 max-w-[38ch] text-sm leading-relaxed text-ink-muted">
+                                Evidence-based training and competency assessment for personal care aides,
+                                nursing assistants, and family caregivers. Each credential is verifiable
+                                by employers in seconds.
+                            </p>
+                            <p className="mt-4 inline-flex items-center gap-2 rounded-full border border-accent-line bg-accent-soft px-3 py-1 text-xs font-semibold text-accent-ink">
+                                <span className="size-1.5 rounded-full bg-accent" aria-hidden="true" />
+                                Advisory-reviewed &bull; Updated quarterly
                             </p>
                         </div>
 
                         {FOOTER_COLUMNS.map((column) => (
                             <div key={column.heading}>
-                                <h2 className="text-sm font-semibold text-ink">{column.heading}</h2>
+                                <h2 className="text-xs font-semibold uppercase tracking-[0.06em] text-ink">{column.heading}</h2>
                                 <ul className="mt-4 space-y-2.5">
                                     {column.links.map((link) => (
                                         <li key={link.name}>
@@ -183,15 +186,26 @@ export default function GuestLayout({ children, title }: Props) {
                         ))}
                     </div>
 
-                    <div className="flex flex-col gap-4 border-t border-line pt-6 text-sm text-ink-subtle sm:flex-row sm:items-center sm:justify-between">
-                        <p>&copy; {new Date().getFullYear()} Tend. All rights reserved.</p>
-                        <p>
-                            Reviewing this project? Demo sign-ins are listed on the{' '}
-                            <Link href="/login" className="font-medium text-accent-ink underline underline-offset-2">
-                                sign-in page
+                    <div className="border-t border-line pt-6">
+                        <p className="max-w-3xl text-xs leading-relaxed text-ink-subtle">
+                            Tend provides continuing-education content for caregivers. Programs are reviewed by practising
+                            clinicians and educators. Tend is not a degree-granting institution and does not provide
+                            medical advice. Certificate validity is checked at{' '}
+                            <Link href="/verify" className="font-medium text-accent-ink underline underline-offset-2">
+                                /verify
                             </Link>
                             .
                         </p>
+                        <div className="mt-6 flex flex-col gap-3 border-t border-line/60 pt-6 text-sm text-ink-subtle sm:flex-row sm:items-center sm:justify-between">
+                            <p>&copy; {new Date().getFullYear()} Tend. All rights reserved.</p>
+                            <p>
+                                Reviewing this project? Demo sign-ins are on the{' '}
+                                <Link href="/login" className="font-medium text-accent-ink underline underline-offset-2">
+                                    sign-in page
+                                </Link>
+                                .
+                            </p>
+                        </div>
                     </div>
                 </div>
             </footer>

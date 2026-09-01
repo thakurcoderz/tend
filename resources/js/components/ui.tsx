@@ -61,6 +61,12 @@ export function Panel({ className, ...props }: ComponentProps<'div'>) {
     return <div className={cn('panel', className)} {...props} />;
 }
 
+/* --- Eyebrow ------------------------------------------------------------ */
+
+export function Eyebrow({ children, className }: { children: ReactNode; className?: string }) {
+    return <p className={cn('eyebrow mb-3', className)}>{children}</p>;
+}
+
 /* --- Page header -------------------------------------------------------- */
 
 interface PageHeaderProps {
@@ -68,16 +74,18 @@ interface PageHeaderProps {
     description?: string;
     actions?: ReactNode;
     breadcrumb?: ReactNode;
+    eyebrow?: string;
 }
 
-export function PageHeader({ title, description, actions, breadcrumb }: PageHeaderProps) {
+export function PageHeader({ title, description, actions, breadcrumb, eyebrow }: PageHeaderProps) {
     return (
         <header className="mb-6 flex flex-col gap-4 sm:mb-8 sm:flex-row sm:items-end sm:justify-between">
             <div className="min-w-0">
                 {breadcrumb ? <div className="mb-2 text-sm text-ink-subtle">{breadcrumb}</div> : null}
+                {eyebrow ? <Eyebrow>{eyebrow}</Eyebrow> : null}
                 <h1 className="text-2xl font-semibold tracking-tight text-ink sm:text-3xl">{title}</h1>
                 {description ? (
-                    <p className="mt-2 max-w-[65ch] text-ink-muted">{description}</p>
+                    <p className="mt-2 max-w-[65ch] text-[15px] leading-relaxed text-ink-muted">{description}</p>
                 ) : null}
             </div>
             {actions ? <div className="flex shrink-0 flex-wrap items-center gap-2">{actions}</div> : null}
@@ -101,17 +109,18 @@ export function Section({ width = 'wide', className, children, ...props }: Secti
 }
 
 interface SectionHeadingProps {
+    eyebrow?: string;
     title: string;
     description?: string;
     className?: string;
 }
 
-/** Headline stacked over body copy. No split headers, no eyebrow by default. */
-export function SectionHeading({ title, description, className }: SectionHeadingProps) {
+export function SectionHeading({ eyebrow, title, description, className }: SectionHeadingProps) {
     return (
         <div className={cn('mb-10 max-w-2xl', className)}>
+            {eyebrow ? <Eyebrow>{eyebrow}</Eyebrow> : null}
             <h2 className="text-2xl font-semibold tracking-tight text-ink sm:text-3xl">{title}</h2>
-            {description ? <p className="mt-3 text-ink-muted">{description}</p> : null}
+            {description ? <p className="mt-3 leading-relaxed text-ink-muted">{description}</p> : null}
         </div>
     );
 }
@@ -197,11 +206,15 @@ export function Stat({ label, value, hint, icon }: StatProps) {
     return (
         <div className="card p-5">
             <div className="flex items-start justify-between gap-3">
-                <p className="text-sm font-medium text-ink-muted">{label}</p>
-                {icon ? <span className="text-accent">{icon}</span> : null}
+                <p className="text-xs font-semibold uppercase tracking-[0.06em] text-ink-subtle">{label}</p>
+                {icon ? (
+                    <span className="flex size-8 items-center justify-center rounded-control bg-accent-soft text-accent-ink">
+                        {icon}
+                    </span>
+                ) : null}
             </div>
-            <p className="tabular mt-2 text-3xl font-semibold tracking-tight text-ink">{value}</p>
-            {hint ? <p className="mt-1 text-sm text-ink-subtle">{hint}</p> : null}
+            <p className="tabular mt-3 text-3xl font-semibold tracking-tight text-ink">{value}</p>
+            {hint ? <p className="mt-1.5 text-sm leading-snug text-ink-subtle">{hint}</p> : null}
         </div>
     );
 }
@@ -221,13 +234,13 @@ export function Progress({ value, label, className }: ProgressProps) {
     return (
         <div className={className}>
             {label ? (
-                <div className="mb-1.5 flex items-baseline justify-between gap-2 text-sm">
-                    <span className="font-medium text-ink-muted">{label}</span>
-                    <span className="tabular font-semibold text-ink">{pct}%</span>
+                <div className="mb-2 flex items-baseline justify-between gap-2 text-sm">
+                    <span className="text-xs font-semibold uppercase tracking-[0.06em] text-ink-muted">{label}</span>
+                    <span className="tabular text-sm font-semibold text-ink">{pct}%</span>
                 </div>
             ) : null}
             <div
-                className="h-1.5 w-full overflow-hidden rounded-full bg-surface-sunken"
+                className="h-2 w-full overflow-hidden rounded-full bg-surface-sunken ring-1 ring-line/60"
                 role="progressbar"
                 aria-valuenow={pct}
                 aria-valuemin={0}
@@ -254,15 +267,15 @@ interface EmptyStateProps {
 
 export function EmptyState({ icon, title, description, action }: EmptyStateProps) {
     return (
-        <div className="card flex flex-col items-center px-6 py-14 text-center">
+        <div className="card flex flex-col items-center px-6 py-12 text-center sm:py-14">
             {icon ? (
-                <div className="mb-4 flex size-11 items-center justify-center rounded-full bg-accent-soft text-accent-ink">
+                <div className="mb-4 flex size-11 items-center justify-center rounded-full bg-surface-muted ring-1 ring-line text-accent-ink">
                     {icon}
                 </div>
             ) : null}
-            <h3 className="text-base font-semibold text-ink">{title}</h3>
-            {description ? <p className="mt-1.5 max-w-sm text-sm text-ink-muted">{description}</p> : null}
-            {action ? <div className="mt-5">{action}</div> : null}
+            <h3 className="text-base font-semibold tracking-tight text-ink">{title}</h3>
+            {description ? <p className="mt-1.5 max-w-sm text-sm leading-relaxed text-ink-muted">{description}</p> : null}
+            {action ? <div className="mt-6">{action}</div> : null}
         </div>
     );
 }

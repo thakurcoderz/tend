@@ -86,7 +86,7 @@ export default function AdminLayout({ children, title }: Props) {
                         sidebarOpen ? 'translate-x-0' : '-translate-x-full',
                     )}
                 >
-                    <div className="hidden h-[68px] shrink-0 items-center border-b border-line px-5 lg:flex">
+                    <div className="hidden h-[68px] shrink-0 items-center border-b border-line bg-surface px-5 lg:flex">
                         <Brand href="/admin/dashboard" context="Admin console" />
                     </div>
 
@@ -103,8 +103,9 @@ export default function AdminLayout({ children, title }: Props) {
                             </Link>
                         ))}
 
-                        <div className="pt-4">
-                            <Link href="/admin/courses/create" className="nav-link w-full justify-start">
+                        <div className="mt-4 rounded-card border border-dashed border-line bg-surface-muted/40 p-3">
+                            <p className="text-xs font-semibold uppercase tracking-[0.06em] text-ink-subtle">Quick create</p>
+                            <Link href="/admin/courses/create" className="btn btn-secondary btn-sm mt-2 w-full justify-start">
                                 <PlusCircle className="size-4" />
                                 New course
                             </Link>
@@ -137,7 +138,7 @@ export default function AdminLayout({ children, title }: Props) {
                     </div>
                 </aside>
 
-                <main id="main" className="min-w-0 flex-1 px-4 py-8 sm:px-6 lg:px-8">
+                <main id="main" className="min-w-0 flex-1 bg-canvas px-4 py-6 sm:px-6 sm:py-8 lg:px-8">
                     <div className="mx-auto max-w-7xl">{children}</div>
                 </main>
             </div>

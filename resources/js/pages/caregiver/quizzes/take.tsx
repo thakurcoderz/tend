@@ -102,12 +102,15 @@ export default function QuizTake({ quiz, questions, startedAt }: Props) {
     return (
         <CaregiverLayout title={quiz.title}>
             <form onSubmit={handleSubmit} className="mx-auto max-w-3xl">
-                <div className="sticky top-[68px] z-30 -mx-4 border-b border-line bg-surface/90 px-4 py-3 backdrop-blur-md sm:-mx-6 sm:px-6">
+                <div className="sticky top-[68px] z-30 -mx-4 border-b border-line bg-surface/95 px-4 py-3 backdrop-blur-xl sm:-mx-6 sm:px-6">
                     <div className="flex items-center justify-between gap-4">
                         <div className="min-w-0">
-                            <h1 className="truncate font-semibold text-ink">{quiz.title}</h1>
-                            <p className="tabular text-sm text-ink-muted">
-                                {answeredCount} of {questions.length} answered
+                            <p className="text-xs font-semibold uppercase tracking-[0.06em] text-accent-ink">
+                                Assessment • {quiz.passing_score}% to pass • {questions.length} questions
+                            </p>
+                            <h1 className="mt-0.5 truncate text-sm font-semibold tracking-tight text-ink sm:text-base">{quiz.title}</h1>
+                            <p className="tabular mt-0.5 text-xs text-ink-subtle">
+                                {answeredCount} of {questions.length} answered • Unanswered marked incorrect
                             </p>
                         </div>
 
@@ -115,8 +118,10 @@ export default function QuizTake({ quiz, questions, startedAt }: Props) {
                             <p
                                 aria-live={isLowOnTime ? 'assertive' : 'off'}
                                 className={cn(
-                                    'tabular inline-flex shrink-0 items-center gap-1.5 rounded-control px-2.5 py-1.5 text-sm font-semibold',
-                                    isLowOnTime ? 'bg-danger-soft text-danger' : 'bg-surface-muted text-ink-muted',
+                                    'tabular inline-flex shrink-0 items-center gap-1.5 rounded-full border px-3 py-1.5 text-sm font-semibold',
+                                    isLowOnTime
+                                        ? 'border-danger-line bg-danger-soft text-danger'
+                                        : 'border-line bg-surface-muted text-ink-muted',
                                 )}
                             >
                                 <Clock className="size-4" />
@@ -125,7 +130,7 @@ export default function QuizTake({ quiz, questions, startedAt }: Props) {
                         ) : null}
                     </div>
 
-                    <Progress className="mt-2.5" value={(answeredCount / questions.length) * 100} />
+                    <Progress className="mt-3" value={(answeredCount / questions.length) * 100} />
                 </div>
 
                 <ol className="mt-8 space-y-6">
@@ -139,7 +144,7 @@ export default function QuizTake({ quiz, questions, startedAt }: Props) {
                                 </p>
                                 <p className="mt-1.5 text-lg font-medium text-ink">{question.question_text}</p>
 
-                                <div className="mt-5 space-y-2">
+                                <div className="mt-5 space-y-2.5">
                                     {question.options.map((option) => {
                                         const isSelected = data.answers[question.id] === option.id;
 
@@ -147,10 +152,10 @@ export default function QuizTake({ quiz, questions, startedAt }: Props) {
                                             <label
                                                 key={option.id}
                                                 className={cn(
-                                                    'flex cursor-pointer items-start gap-3 rounded-control border p-3.5 transition',
+                                                    'flex cursor-pointer items-start gap-3 rounded-control border p-4 transition',
                                                     isSelected
-                                                        ? 'border-accent bg-accent-soft'
-                                                        : 'border-line hover:bg-surface-muted',
+                                                        ? 'border-accent bg-accent-soft ring-1 ring-accent-line'
+                                                        : 'border-line bg-surface hover:border-line-strong hover:bg-surface-muted',
                                                 )}
                                             >
                                                 <input
@@ -166,7 +171,7 @@ export default function QuizTake({ quiz, questions, startedAt }: Props) {
                                                     }
                                                     className="mt-0.5 size-4 shrink-0 border-line-strong text-accent focus:ring-accent"
                                                 />
-                                                <span className={isSelected ? 'text-ink' : 'text-ink-muted'}>
+                                                <span className={cn('text-sm leading-relaxed', isSelected ? 'font-medium text-ink' : 'text-ink-muted')}>
                                                     {option.option_text}
                                                 </span>
                                             </label>

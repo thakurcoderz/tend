@@ -20,8 +20,9 @@ export default function CoursesIndex({ courses, categories, selectedCategory }: 
     return (
         <CaregiverLayout title="Browse programs">
             <PageHeader
+                eyebrow="Evidence-based • Verifiable • Self-paced"
                 title="Browse programs"
-                description="Enrol in a certification program and work through it at your own pace."
+                description="Enrol free, study on your phone between visits, and earn a credential employers verify at /verify."
             />
 
             <div className="mb-6 flex flex-wrap gap-2" role="group" aria-label="Filter by category">
@@ -59,7 +60,7 @@ export default function CoursesIndex({ courses, categories, selectedCategory }: 
                         <Card
                             key={course.id}
                             as="article"
-                            className="group relative flex flex-col p-5 transition hover:shadow-sm"
+                            className="card-hover group relative flex flex-col p-5"
                         >
                             <div className="flex flex-wrap items-center gap-2">
                                 <Badge tone="accent">{course.category}</Badge>
@@ -88,14 +89,14 @@ export default function CoursesIndex({ courses, categories, selectedCategory }: 
 
                             <p className="mt-2 line-clamp-3 flex-1 text-sm text-ink-muted">{course.summary}</p>
 
-                            <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-ink-subtle">
+                            <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-1 text-xs font-medium uppercase tracking-[0.04em] text-ink-subtle">
                                 <span className="inline-flex items-center gap-1.5">
-                                    <Layers className="size-4" />
+                                    <Layers className="size-3.5" />
                                     {course.modules_count ?? 0} modules
                                 </span>
                                 <span className="inline-flex items-center gap-1.5">
-                                    <Clock className="size-4" />
-                                    {course.estimated_hours}h
+                                    <Clock className="size-3.5" />
+                                    {course.estimated_hours}h • {course.level}
                                 </span>
                             </div>
 

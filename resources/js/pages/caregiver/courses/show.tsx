@@ -30,12 +30,14 @@ export default function CourseShow({
     return (
         <CaregiverLayout title={course.title}>
             <PageHeader
+                eyebrow={`${course.category} • ${course.level} • ${course.estimated_hours} hours`}
                 breadcrumb={
-                    <Link href="/caregiver/courses" className="hover:text-accent-ink">
-                        Programs
+                    <Link href="/caregiver/courses" className="inline-flex items-center gap-1 hover:text-accent-ink">
+                        <ArrowRight className="size-3 rotate-180" /> All programs
                     </Link>
                 }
                 title={course.title}
+                description={course.summary}
                 actions={
                     isEnrolled ? (
                         firstLesson && firstModule ? (
@@ -59,16 +61,16 @@ export default function CourseShow({
 
             <div className="grid gap-6 lg:grid-cols-3">
                 <div className="lg:col-span-2">
-                    <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
+                    <div className="flex flex-wrap items-center gap-2">
                         <Badge tone="accent">{course.category}</Badge>
                         <Badge tone="neutral">{course.level}</Badge>
-                        <span className="inline-flex items-center gap-1.5 text-sm text-ink-subtle">
-                            <Clock className="size-4" />
-                            {course.estimated_hours} hours
+                        <span className="inline-flex items-center gap-1.5 rounded-full border border-line bg-surface px-2.5 py-1 text-xs font-medium text-ink-subtle">
+                            <Clock className="size-3.5" />
+                            {course.estimated_hours} hours • Phone-friendly • Verifiable
                         </span>
                     </div>
 
-                    <div className="markdown-content mt-5">
+                    <div className="markdown-content mt-5 max-w-none">
                         <MarkdownRenderer content={course.description || course.summary || ''} />
                     </div>
                 </div>

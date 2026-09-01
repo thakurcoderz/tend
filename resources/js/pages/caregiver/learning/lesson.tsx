@@ -48,22 +48,31 @@ export default function LessonViewer({
     return (
         <CaregiverLayout title={lesson.title}>
             <div className="mx-auto max-w-3xl">
-                <nav className="mb-6 text-sm text-ink-subtle">
-                    <Link href={`/caregiver/courses/${course.slug}`} className="hover:text-accent-ink">
+                <nav aria-label="Breadcrumb" className="mb-6 flex flex-wrap items-center gap-2 text-sm text-ink-subtle">
+                    <Link href={`/caregiver/courses/${course.slug}`} className="hover:text-accent-ink hover:underline">
                         {course.title}
                     </Link>
-                    <span className="mx-1.5" aria-hidden="true">
+                    <span className="text-ink-faint" aria-hidden="true">
                         /
                     </span>
-                    <span>{module.title}</span>
+                    <span className="font-medium text-ink-muted">{module.title}</span>
+                    <span className="ml-auto hidden items-center gap-1.5 rounded-full border border-line bg-surface px-2.5 py-1 text-xs font-medium text-ink-subtle sm:inline-flex">
+                        <Clock className="size-3.5" /> {lesson.duration_minutes} min read
+                    </span>
                 </nav>
 
-                <Progress className="mb-8" label="Course progress" value={progress} />
+                <div className="mb-8 rounded-card border border-line bg-surface p-4 shadow-xs">
+                    <Progress label="Course progress" value={progress} />
+                    <p className="mt-2 text-xs text-ink-subtle">
+                        {completedLessonIds.length} of {totalLessons} lessons completed •{' '}
+                        {isCompleted ? 'This lesson completed' : 'Mark complete when finished'}
+                    </p>
+                </div>
 
-                <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
+                <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
                     <Badge tone="neutral">{lesson.content_type.replace('_', ' ')}</Badge>
-                    <span className="inline-flex items-center gap-1.5 text-sm text-ink-subtle">
-                        <Clock className="size-4" />
+                    <span className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-[0.06em] text-ink-subtle">
+                        <Clock className="size-3.5" />
                         {lesson.duration_minutes} min
                     </span>
                     {isCompleted ? (
@@ -71,11 +80,13 @@ export default function LessonViewer({
                             <CheckCircle2 className="size-3.5" />
                             Completed
                         </Badge>
-                    ) : null}
+                    ) : (
+                        <Badge tone="accent">In progress</Badge>
+                    )}
                 </div>
 
-                <h1 className="mt-4 text-3xl font-semibold tracking-tight text-ink">{lesson.title}</h1>
-                {lesson.summary ? <p className="mt-3 text-lg text-ink-muted">{lesson.summary}</p> : null}
+                <h1 className="mt-4 text-3xl font-semibold tracking-tight text-ink sm:text-[1.875rem]">{lesson.title}</h1>
+                {lesson.summary ? <p className="mt-3 text-lg leading-relaxed text-ink-muted">{lesson.summary}</p> : null}
 
                 {lesson.video_url ? (
                     <div className="mt-8 overflow-hidden rounded-card border border-line">
@@ -95,13 +106,18 @@ export default function LessonViewer({
 
                 {lesson.key_takeaways && lesson.key_takeaways.length > 0 ? (
                     <Card as="section" aria-labelledby="takeaways-heading" className="mt-10 p-6">
-                        <h2 id="takeaways-heading" className="font-semibold text-ink">
+                        <h2 id="takeaways-heading" className="flex items-center gap-2 font-semibold tracking-tight text-ink">
+                            <span className="flex size-6 items-center justify-center rounded-full bg-accent-soft text-accent-ink ring-1 ring-accent-line">
+                                <Check className="size-3.5" />
+                            </span>
                             Key takeaways
                         </h2>
                         <ul className="mt-4 space-y-2.5">
-                            {lesson.key_takeaways.map((item) => (
-                                <li key={item} className="flex gap-2.5 text-ink-muted">
-                                    <Check className="mt-1 size-4 shrink-0 text-accent" />
+                            {lesson.key_takeaways.map((item, idx) => (
+                                <li key={item} className="flex gap-3 text-sm leading-relaxed text-ink-muted">
+                                    <span className="mt-0.5 flex size-5 shrink-0 items-center justify-center rounded-full bg-surface-muted text-xs font-bold text-ink-subtle ring-1 ring-line">
+                                        {idx + 1}
+                                    </span>
                                     <span>{item}</span>
                                 </li>
                             ))}
@@ -111,10 +127,10 @@ export default function LessonViewer({
 
                 {lesson.clinical_checklist && lesson.clinical_checklist.length > 0 ? (
                     <Card as="section" aria-labelledby="checklist-heading" className="mt-6 p-6">
-                        <h2 id="checklist-heading" className="font-semibold text-ink">
+                        <h2 id="checklist-heading" className="font-semibold tracking-tight text-ink">
                             Clinical checklist
                         </h2>
-                        <p className="mt-1 text-sm text-ink-muted">
+                        <p className="mt-1 text-sm leading-relaxed text-ink-muted">
                             Tick items off as you practise. This is for your own reference and is not saved.
                         </p>
                         <ul className="mt-4 space-y-1">
@@ -127,12 +143,12 @@ export default function LessonViewer({
                                             type="button"
                                             onClick={() => toggleItem(index)}
                                             aria-pressed={isChecked}
-                                            className="flex w-full items-start gap-3 rounded-control p-2 text-left transition hover:bg-surface-muted"
+                                            className="flex min-h-11 w-full items-start gap-3 rounded-control px-2 py-2.5 text-left text-sm leading-relaxed transition hover:bg-surface-muted"
                                         >
                                             {isChecked ? (
-                                                <CheckCircle2 className="mt-0.5 size-4.5 shrink-0 text-ok" />
+                                                <CheckCircle2 className="mt-0.5 size-5 shrink-0 text-ok" />
                                             ) : (
-                                                <Square className="mt-0.5 size-4.5 shrink-0 text-ink-subtle" />
+                                                <Square className="mt-0.5 size-5 shrink-0 text-ink-subtle" />
                                             )}
                                             <span className={isChecked ? 'text-ink-subtle line-through' : 'text-ink'}>
                                                 {item}
@@ -145,16 +161,22 @@ export default function LessonViewer({
                     </Card>
                 ) : null}
 
-                <div className="mt-10 border-t border-line pt-6">
+                <div className="mt-10 rounded-card border border-line bg-surface-muted/60 p-4 sm:p-5">
                     {isCompleted ? (
                         <p className="flex items-center gap-2 font-medium text-ok">
                             <CheckCircle2 className="size-5" />
                             You have completed this lesson.
                         </p>
                     ) : (
-                        <Button size="lg" onClick={() => post(`/caregiver/learn/lessons/${lesson.id}/complete`)} disabled={processing}>
-                            {processing ? 'Saving...' : 'Mark lesson complete'}
-                        </Button>
+                        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                            <p className="text-sm text-ink-muted">
+                                Finished reading? Mark it complete to track your progress.
+                            </p>
+                            <Button size="lg" onClick={() => post(`/caregiver/learn/lessons/${lesson.id}/complete`)} disabled={processing} className="shrink-0">
+                                <Check className="size-4" />
+                                {processing ? 'Saving...' : 'Mark lesson complete'}
+                            </Button>
+                        </div>
                     )}
                 </div>
 

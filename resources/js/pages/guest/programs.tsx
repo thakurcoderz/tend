@@ -24,11 +24,13 @@ export default function Programs({ courses, categories, selectedCategory }: Prop
         <GuestLayout title="Certification programs">
             <Section>
                 <div className="max-w-2xl">
-                    <h1 className="text-3xl font-semibold tracking-tight text-ink sm:text-4xl">
+                    <p className="eyebrow">Clinical training you can finish between visits</p>
+                    <h1 className="mt-2 text-3xl font-semibold tracking-tight text-ink sm:text-4xl">
                         Certification programs
                     </h1>
-                    <p className="mt-3 text-ink-muted">
-                        Self-paced clinical training with scenario-based assessment and a verifiable credential.
+                    <p className="mt-3 max-w-[60ch] leading-relaxed text-ink-muted">
+                        Self-paced, evidence-based training with scenario-based assessment. Enrol free, study on
+                        your phone, and earn a credential any employer can verify at <span className="font-mono text-ink">/verify</span>.
                     </p>
                 </div>
 
@@ -49,6 +51,10 @@ export default function Programs({ courses, categories, selectedCategory }: Prop
                         );
                     })}
                 </div>
+                <p className="mt-3 text-xs text-ink-subtle">
+                    All programs include clinical checklists, competency assessment (80% to pass), and a verifiable
+                    certificate. Enrol free.
+                </p>
 
                 {courses.length === 0 ? (
                     <EmptyState
@@ -74,28 +80,31 @@ export default function Programs({ courses, categories, selectedCategory }: Prop
                                             <div className="flex flex-wrap items-center gap-2">
                                                 <Badge tone="accent">{course.category}</Badge>
                                                 <Badge tone="neutral">{course.level}</Badge>
+                                                <span className="inline-flex items-center gap-1 rounded-full border border-line bg-surface-muted px-2.5 py-1 text-xs font-semibold text-ink-subtle">
+                                                    {course.estimated_hours} hrs &bull; {modules.length} modules
+                                                </span>
                                             </div>
 
-                                            <h2 className="mt-3 text-xl font-semibold tracking-tight text-ink">
+                                            <h2 className="mt-3 text-xl font-semibold leading-tight tracking-tight text-ink">
                                                 {course.title}
                                             </h2>
-                                            <p className="mt-2 max-w-[70ch] text-ink-muted">
+                                            <p className="mt-2 max-w-[70ch] leading-relaxed text-ink-muted">
                                                 {course.description || course.summary}
                                             </p>
 
-                                            <div className="mt-4 flex flex-wrap items-center gap-x-5 gap-y-2 text-sm text-ink-subtle">
+                                            <div className="mt-4 flex flex-wrap items-center gap-x-5 gap-y-2 text-xs font-medium uppercase tracking-[0.04em] text-ink-subtle">
                                                 <span className="inline-flex items-center gap-1.5">
-                                                    <Clock className="size-4" />
-                                                    {course.estimated_hours} hours
+                                                    <Clock className="size-3.5" />
+                                                    {course.estimated_hours} hours of instruction
                                                 </span>
                                                 <span className="inline-flex items-center gap-1.5">
-                                                    <Layers className="size-4" />
-                                                    {modules.length} modules
+                                                    <Layers className="size-3.5" />
+                                                    {modules.length} modules • Assessment at 80%
                                                 </span>
                                             </div>
 
                                             <div className="mt-6 flex flex-wrap gap-2">
-                                                <ButtonLink href="/register">Enrol in this program</ButtonLink>
+                                                <ButtonLink href="/register">Enrol free</ButtonLink>
                                                 {modules.length > 0 ? (
                                                     <button
                                                         type="button"
@@ -124,15 +133,15 @@ export default function Programs({ courses, categories, selectedCategory }: Prop
                                                 {modules.map((module, index) => (
                                                     <li
                                                         key={module.id}
-                                                        className="flex items-baseline gap-3 px-6 py-3 text-sm"
+                                                        className="flex items-baseline gap-3 px-6 py-3.5 text-sm"
                                                     >
-                                                        <span className="tabular w-6 shrink-0 font-medium text-ink-subtle">
+                                                        <span className="tabular flex size-6 shrink-0 items-center justify-center rounded-full bg-surface text-xs font-bold text-accent-ink ring-1 ring-accent-line">
                                                             {String(index + 1).padStart(2, '0')}
                                                         </span>
-                                                        <span className="flex-1 font-medium text-ink">
+                                                        <span className="flex-1 font-medium leading-snug text-ink">
                                                             {module.title}
                                                         </span>
-                                                        <span className="shrink-0 text-ink-subtle">
+                                                        <span className="shrink-0 rounded-full bg-surface px-2 py-0.5 text-xs font-medium tabular-nums text-ink-subtle ring-1 ring-line">
                                                             {module.estimated_minutes} min
                                                         </span>
                                                     </li>

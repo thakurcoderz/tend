@@ -42,7 +42,7 @@ export default function CaregiverLayout({ children, title }: Props) {
                 Skip to content
             </a>
 
-            <header className="sticky top-0 z-40 border-b border-line bg-surface/85 backdrop-blur-md">
+            <header className="sticky top-0 z-40 border-b border-line bg-surface/90 backdrop-blur-xl supports-[backdrop-filter]:bg-surface/80">
                 <div className="mx-auto flex h-[68px] max-w-7xl items-center gap-6 px-4 sm:px-6 lg:px-8">
                     <Brand href="/caregiver/dashboard" context="Learner portal" />
 
@@ -121,14 +121,14 @@ export default function CaregiverLayout({ children, title }: Props) {
                 ) : null}
             </header>
 
-            <main id="main" className="mx-auto w-full max-w-7xl flex-1 px-4 py-8 sm:px-6 lg:px-8">
+            <main id="main" className="mx-auto w-full max-w-7xl flex-1 px-4 py-6 sm:px-6 sm:py-8 lg:px-8">
                 {children}
             </main>
 
             <footer className="border-t border-line bg-surface">
                 <div className="mx-auto flex max-w-7xl flex-col gap-2 px-4 py-5 text-sm text-ink-subtle sm:flex-row sm:items-center sm:justify-between sm:px-6 lg:px-8">
-                    <p>&copy; {new Date().getFullYear()} Tend</p>
-                    <div className="flex flex-wrap items-center gap-5">
+                    <p className="text-xs uppercase tracking-[0.06em]">&copy; {new Date().getFullYear()} Tend — Certification Academy</p>
+                    <div className="flex flex-wrap items-center gap-5 text-xs font-medium uppercase tracking-[0.04em]">
                         <Link href="/contact" className="transition hover:text-accent-ink">
                             Support
                         </Link>

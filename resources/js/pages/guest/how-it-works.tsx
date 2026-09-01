@@ -15,11 +15,13 @@ export default function HowItWorks({ steps }: Props) {
     return (
         <GuestLayout title="How it works">
             <Section width="prose">
-                <h1 className="text-3xl font-semibold tracking-tight text-ink sm:text-4xl">
+                <p className="eyebrow">Evidence-based • Verifiable</p>
+                <h1 className="mt-2 text-3xl font-semibold tracking-tight text-ink sm:text-4xl">
                     How certification works
                 </h1>
-                <p className="mt-3 text-lg text-ink-muted">
-                    From creating an account to holding a credential an employer can check.
+                <p className="mt-3 text-lg leading-relaxed text-ink-muted">
+                    From creating an account to holding a credential an employer can check — no paperwork, no
+                    waiting.
                 </p>
             </Section>
 

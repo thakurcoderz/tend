@@ -50,10 +50,11 @@ export default function Verify({ code, certificate, isValid }: Props) {
     return (
         <GuestLayout title="Verify a certificate">
             <Section width="prose">
-                <h1 className="text-3xl font-semibold tracking-tight text-ink">Verify a certificate</h1>
-                <p className="mt-3 text-ink-muted">
-                    Enter the verification ID printed on the certificate to confirm it was issued by
-                    Tend.
+                <p className="eyebrow">No login required</p>
+                <h1 className="mt-2 text-3xl font-semibold tracking-tight text-ink">Verify a certificate</h1>
+                <p className="mt-3 leading-relaxed text-ink-muted">
+                    Enter the verification ID printed at the bottom of the certificate to confirm it was issued by
+                    Tend. Anyone — employers, agencies, families — can check in seconds.
                 </p>
 
                 <form onSubmit={handleSearch} className="mt-8 flex flex-col gap-2 sm:flex-row">
@@ -80,17 +81,25 @@ export default function Verify({ code, certificate, isValid }: Props) {
 
                 {/* Three states: nothing looked up yet, found, not found. */}
                 {code === null ? (
-                    <p className="mt-6 text-sm text-ink-subtle">
-                        The verification ID appears at the bottom of every certificate we issue.
-                    </p>
+                    <div className="mt-6 rounded-card border border-dashed border-line bg-surface-muted/60 p-4 text-sm leading-relaxed text-ink-subtle">
+                        <p className="font-medium text-ink-muted">Where to find the ID</p>
+                        <p className="mt-1">
+                            The verification ID is at the bottom of every certificate we issue. It starts with{' '}
+                            <span className="font-mono font-semibold text-ink">CERT-</span> and looks like{' '}
+                            <span className="font-mono text-ink">CERT-CADCS-2026-8942</span>.
+                        </p>
+                    </div>
                 ) : isValid && certificate ? (
                     <Card className="mt-8 overflow-hidden">
                         <div className="flex items-center gap-3 border-b border-ok-line bg-ok-soft px-6 py-4">
-                            <ShieldCheck className="size-5 shrink-0 text-ok" />
+                            <span className="flex size-8 items-center justify-center rounded-full bg-ok text-white">
+                                <ShieldCheck className="size-4" />
+                            </span>
                             <div>
-                                <p className="font-semibold text-ok">Valid certificate</p>
+                                <p className="font-semibold tracking-tight text-ok">Valid certificate — in good standing</p>
                                 <p className="text-sm text-ink-muted">
-                                    Issued by Tend and currently in good standing.
+                                    Issued by Tend. Checked against our registry on{' '}
+                                    {new Date().toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' })}.
                                 </p>
                             </div>
                         </div>

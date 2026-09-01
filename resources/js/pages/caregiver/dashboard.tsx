@@ -41,8 +41,9 @@ export default function Dashboard({
     return (
         <CaregiverLayout title="My learning">
             <PageHeader
+                eyebrow={`${stats.enrolledCount} programs • ${stats.certificatesCount} credentials`}
                 title={`Welcome back, ${user?.name?.split(' ')[0] ?? 'there'}`}
-                description="Pick up where you left off, or start something new."
+                description="Pick up where you left off, or start something new. All content is phone-friendly and saves automatically."
                 actions={
                     nextCourse ? (
                         <ButtonLink href={`/caregiver/courses/${nextCourse.slug}`}>
@@ -62,11 +63,13 @@ export default function Dashboard({
                 <Stat
                     label="In progress"
                     value={stats.inProgressCount}
+                    hint={`${stats.enrolledCount} enrolled`}
                     icon={<BookOpen className="size-5" />}
                 />
                 <Stat
                     label="Completed"
                     value={stats.completedCount}
+                    hint={stats.completedCount > 0 ? 'Eligible for certificate' : 'Finish assessment to earn'}
                     icon={<CheckCircle2 className="size-5" />}
                 />
                 <Stat
@@ -78,6 +81,7 @@ export default function Dashboard({
                 <Stat
                     label="Certificates"
                     value={stats.certificatesCount}
+                    hint={stats.certificatesCount > 0 ? 'Verifiable at /verify' : 'Pass at 80% to earn'}
                     icon={<Award className="size-5" />}
                 />
             </div>

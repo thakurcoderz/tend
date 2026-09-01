@@ -34,9 +34,11 @@ export default function Contact({ faqs }: Props) {
         <GuestLayout title="Contact and support">
             <Section>
                 <div className="max-w-2xl">
-                    <h1 className="text-3xl font-semibold tracking-tight text-ink sm:text-4xl">Contact us</h1>
-                    <p className="mt-3 text-ink-muted">
-                        Questions about a program, a credential, or training a team? Send us a message.
+                    <p className="eyebrow">We reply within one working day</p>
+                    <h1 className="mt-2 text-3xl font-semibold tracking-tight text-ink sm:text-4xl">Contact us</h1>
+                    <p className="mt-3 leading-relaxed text-ink-muted">
+                        Questions about a program, a credential, or training a team? Send us a message — a real
+                        person on our faculty team replies.
                     </p>
                 </div>
 
